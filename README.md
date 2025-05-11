@@ -5,8 +5,8 @@ This application will hopefully utilise the majority of skills I've learnt over 
 
 Dry, organise and bug free TS is the end goal of this project! 
 
-Once the application is fully functioning, I will hopefuly add more features to the application, such as:  JWT, Authentication and users. 
+Once the application is fully functioning, I will hopefuly add more features to the application, such as:  JWT to User/Role Authentication. 
 
-These added feaures will hopefuly further consolidate my acquired skills. 
+These added features will hopefuly further consolidate my acquired skills. 
 
 Enjoy the application and feedback is welcome as awlways! 
