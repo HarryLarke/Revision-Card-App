@@ -3,7 +3,8 @@ import mongoose from "mongoose"
 import express from "express"
 import path from "path"
 import cors from "cors"
-import corsOptions from "./config/corsOptions"
+import cookieParser from "cookie-parser"
+import corsOptions from './config/corsOptions'
 import errorHandler from "./middleware/errorHandler"
 import connectDb from "./config/dbConn"
 import credentials from "./middleware/credentials"
@@ -11,6 +12,7 @@ import cards from "./routes/api/cards"
 import bundles from "./routes/api/bundles"
 import { logger } from "./middleware/logEvents"
 const app = express()
+
 const PORT = process.env.PORT || 3500
 
 connectDb() 
@@ -18,15 +20,17 @@ connectDb()
 app.use(logger)
 app.use(credentials)
 app.use(cors(corsOptions))
-app.use(express.json())
 
+app.use(express.urlencoded({ extended: false}))
+app.use(express.json())
+app.use(cookieParser()) 
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.use('/cards', cards)
 app.use('/bundles', bundles)
 //Maybe produce protected routes later?
 
-app.all('*', (req, res) => {
+app.all('/', (req, res) => {
     res.status(404)
     if(req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'))
