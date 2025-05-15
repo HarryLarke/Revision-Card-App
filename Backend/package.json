@@ -4,14 +4,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "ts-node-dev --respawn src/server.ts"
+    "start": "node dist/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only source/server.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "HarryL",
   "license": "ISC",
   "description": "Backend for Revision-Cards-App",
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.17",
@@ -21,6 +23,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",

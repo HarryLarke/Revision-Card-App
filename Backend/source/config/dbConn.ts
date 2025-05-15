@@ -6,7 +6,7 @@ const URI: string | any = process.env.DATABASE_URI
 const connectDB = async () => {
     try{ 
         await mongoose.connect(URI)
-    } catch(err){
+    } catch(err: any){
         console.error(err.message)
     }
 }
