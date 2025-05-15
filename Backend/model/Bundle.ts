@@ -7,17 +7,17 @@ const bundleSchema = new Schema({
         type: Number, 
         required: true
     },
-    bundleName: {
+    title: {
         type: String,
         required: true
     },
-    bundleDescription: {
+    description: {
         type: String,
         required: true
     }
 })
 
-export default mongoose.model('Blundle', bundleSchema)
+export default mongoose.model('Bundle', bundleSchema)
 
 //Potentially work this data into a class system?
 //MongoDB will also give it an id upon receiving the data.

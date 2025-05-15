@@ -1,4 +1,4 @@
-import Bundle from "../model/Card"
+import Bundle from "../model/Bundle"
 
 export const getAllBundles = async (req, res) => {
     const bundles = await Bundle.find()
@@ -25,3 +25,38 @@ export const createNewBundle  = async (req, res) => {
     }
 }
 
+export const updateBundle = async (req, res) => {
+    if(!req?.body?.id) 
+        return res.status(401).json({'message': 'ID parameter required.'})
+    const bundle = await Bundle.findOne({_id: req.body.id}).exec()//Make id and _id allign
+    if(!bundle) 
+        return res.status(204).json({'message': `No Bundle ID matches for: ${req.body.id}`})
+
+    if(req.body?.title) { bundle.title = req.body.title}
+    if(req.body?.description) { bundle.description = req.body.description}
+    const result = await bundle.save()
+    res.json(result)
+}
+
+//Should this be in the ID section on the router?
+export const deleteBundle = async (req, res) => {
+    if(!req.params?.id) 
+        return res.status(400).json({'message': 'Bundle ID required.'})
+    const bundle = await Bundle.findOne({_id: req.body.id}).exec()
+    if(!bundle) 
+        return res.status(204).json({'message': `No Bundle ID matcges for: ${req.body.id}`})
+
+    const result = await bundle.deleteOne({
+        _id: req.body.id
+    })
+    res.json({result})
+}
+
+export const getBundle = async (req, res) => {
+    if(!req.params?.id) 
+        return res.status(400).json({'message': 'Bundle ID required.'})
+    const bundle = await Bundle.findOne({_id: req.body.id}).exec()
+    if(!bundle) 
+        return res.status(204).json({'message': `No Bundle ID matches for: ${req.body.id}`})
+    res.json(bundle)
+}
