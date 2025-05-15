@@ -1,8 +1,10 @@
+import { CorsOptions } from "cors"; 
+
 import allowOrigins from "./allowOrigins";
 
-const corsOptions = {
-    origin: (origin: any, callback: any) => {
-        if(allowOrigins.indexOf(origin) !== -1 || !origin) {
+const corsOptions: CorsOptions = {
+    origin: (origin, callback) => {
+        if(!origin || allowOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))

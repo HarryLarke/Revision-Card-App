@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const cardSchema = new Schema({
-    id: {
-        type: String,
-        required: true
-    },
     parentBundle: {
         type: Number,
         required: true

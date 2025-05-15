@@ -30,6 +30,7 @@ app.use('/cards', cards)
 app.use('/bundles', bundles)
 //Maybe produce protected routes later?
 
+//Still need to sort out wild card issues too
 app.all('/', (req, res) => {
     res.status(404)
     if(req.accepts('html')) {
