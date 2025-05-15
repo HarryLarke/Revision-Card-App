@@ -1,9 +1,11 @@
+import { Request, Response, NextFunction } from "express"
+
 import allowOrigins from "../config/allowOrigins"
 
-const credentials = (req, res, next) => {
+const credentials = (req: Request, res: Response, next: NextFunction) => {
     const origin = req.headers.origin
-    if(allowOrigins.includes(origin)) {
-        res.headers('Access-Control-Allow-Credentials', true)
+    if(origin && allowOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Credentials', 'true')
     } next()
 }
 
