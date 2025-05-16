@@ -22,8 +22,7 @@ export const createNewBundle  = async (req: Request, res: Response): Promise<voi
     try{
         const result = await Bundle.create({
             title : req.body.title,
-            description : req.body.description,
-            timeDate: `${format(new Date(), "HH:mm:ss\tddMMyyyy")}`
+            description : req.body.description
         })
         res.status(201).json(result)
     }catch(err) {
@@ -43,7 +42,6 @@ export const updateBundle = async (req: Request, res: Response): Promise<void> =
         }
     if(req.body?.title) { bundle.title = req.body.title}
     if(req.body?.description) { bundle.description = req.body.description}
-    bundle.timeDate = `${format(new Date(), "HH:mm:ss\tddMMyyyy")}`
     const result = await bundle.save()
     res.json(result)
 }

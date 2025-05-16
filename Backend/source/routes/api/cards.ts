@@ -12,7 +12,7 @@ router.route('/')
 router.route('/:id')
     .get(getCard)
 
-router.route('/bundles/:bundleId')
+router.route('/bundles/:id')
     .get(getCardsbyBundleId)
 
 export default router
