@@ -10,6 +10,10 @@ const bundleSchema = new Schema({
     description: {
         type: String,
         required: true
+    },
+    timeDate: {
+        type: String,
+        required: true
     }
 })
 
