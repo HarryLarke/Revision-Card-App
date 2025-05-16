@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const cardSchema = new Schema({
     parentBundle: {
-        type: Number,
+        type: String,
         required: true
     },
     question: {
@@ -11,6 +11,10 @@ const cardSchema = new Schema({
         required: true
     },
     answer: {
+        type: String,
+        required: true
+    },
+    timeDate: {
         type: String,
         required: true
     }

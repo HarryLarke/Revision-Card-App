@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
+import { format } from 'date-fns'
 
 import Card from "../model/Card"
-import Bundle from "../model/Bundle"
 
 //Need Promises here?
 export const getAllCards = async (req: Request, res: Response): Promise<void> => {
@@ -19,8 +19,8 @@ export const createNewCard  = async (req: Request, res: Response): Promise<void>
         return 
     }
     //Still figuring where I will put ID 
-    else if(!req?.body.id) {
-        res.status(400).json({'message': 'A number id was NOT assigned to the card'})
+    else if(!req?.body.parentBundle) {
+        res.status(400).json({'message': 'A parent Bundle was NOT assigned to the card'})
         return 
     }
     //Will need to find out how to check parent bundle matching!
@@ -28,7 +28,8 @@ export const createNewCard  = async (req: Request, res: Response): Promise<void>
         const result = await Card.create({
             parentBundle: req.body.parentBundle, //Needs to type of ID
             question : req.body.question,
-            answer : req.body.answer
+            answer : req.body.answer,
+            timeDate: `${format(new Date(), "HH:mm:ss\tddMMyyyy")}`
         })
         res.status(201).json(result)
     }catch(err) {
@@ -48,6 +49,7 @@ export const updateCard = async (req: Request, res: Response): Promise<void> => 
     }
     if(req.body?.question) { card.question = req.body.question}
     if(req.body?.answer) { card.answer = req.body.description} //Maybe implement a re-assign parent bundle??
+    card.timeDate = `${format(new Date(), "HH:mm:ss\tddMMyyyy")}`
     const result = await card.save()
     res.json(result)
 }
@@ -80,4 +82,19 @@ export const getCard = async (req: Request, res: Response): Promise<void> => {
         return 
     }
     res.json(card)
+}
+
+export const getCardsbyBundleId = async (req: Request, res: Response): Promise<void> => {
+    const { bundleId } = req.params
+    if(!bundleId || !req.params?.bundleId) {
+        res.status(400).json({'message': "Card's Parent Bundlle ID required."})
+        return
+    } 
+    const cards = await Card.find({parentBundle : bundleId}).exec()
+
+    if(!cards || cards.length === 0) {
+        res.status(204).json({'message': 'No cards in this bundle.'})
+        return
+    }
+    res.json(cards)
 }
