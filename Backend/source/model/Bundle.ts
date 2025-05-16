@@ -1,8 +1,10 @@
+import { timeStamp } from "console";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema
 
-const bundleSchema = new Schema({
+const bundleSchema = new Schema(
+    {
     title: {
         type: String,
         required: true
@@ -11,11 +13,11 @@ const bundleSchema = new Schema({
         type: String,
         required: true
     },
-    timeDate: {
-        type: String,
-        required: true
+},
+    {
+        timestamps: true
     }
-})
+)  
 
 export default mongoose.model('Bundle', bundleSchema)
 

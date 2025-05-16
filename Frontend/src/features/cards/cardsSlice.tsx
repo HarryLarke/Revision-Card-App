@@ -1,41 +1,67 @@
 import { apiCardsSlice } from '../api/apiSlice' 
 
-interface card {
+interface Card {
+    parentBundle: string, //ObjectId
+    _id: string,
     question: string, 
     answer: string,
+    createdAt: Date,
+    updatedAt: Date
 }
 
-interface loadedCards {
-    cards: card[]
+interface NewCard {
+    parentBundle: string,
+    question: string, 
+    answer: string
 }
+
+interface UpdatedCard {
+    parentBundle: string,
+    question: string, 
+    answer: string
+}
+
 
 export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
     endpoints: builder => ({
-        getCards: builder.query({
+        getCards: builder.query<Card[], void>({
             query: () => '',
-            transformResponse: responseData => {
-                const loadedCards = responseData.map(item => {
-                    return item
-                })
-                return loadedCards 
-                //Find method to order cards - may variable control with the implmentation of settings later on.
-            }, 
-            providesTags: (result, error, arg) => [
-                {type: 'Card', id: 'DISPLAY'},
-                result.ids.map(id => ({type:'Card', id}))
+            transformResponse: (responseData: Card[]) => 
+                responseData
+                    .slice()
+                    .sort(
+                        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                    ),//Maybe put an orderer at the top??? 
+            providesTags: (result) => result ? [
+                {type: 'Card', id: 'List'},
+                ...result.map((card: Card) => ({type: 'Card', id: card._id}))
             ]
+                : [{type: 'Card', id:'List'}],
         }),
-        //Getting cards by ID - maybe set a route on the backend??
+
+        getCardsByBundleId: builder.query<Card[], string>({
+            query: (bundleId: string) => `/bundles/${bundleId}`,
+            transformResponse: (responseData: Card[]) => responseData
+            .slice()
+            .sort(
+                (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            ),
+            providesTags: (result) => result ? [
+                {type: 'Card', id: 'List'},
+                ...result.map((card: Card) => ({type: 'Card', id: card._id}))
+            ]
+                : [{type: 'Card', id:'List'}],
+        }),
         //I think having these variable is good, just because It does not require both just one?
         //need get cards via parent bundle id! 
-        addCard: builder.mutation({
-            query: (newCard) => ({
+        addCard: builder.mutation<NewCard[], string>({
+            query: (newCard: NewCard) => ({
                 url: '',
                 method: 'POST',
                 body: {
+                    parentBundle: newCard.parentBundle,
                     question: newCard.question,
-                    anwser: newCard.answer,
-                    parentBundle: newCard.parentBundle
+                    anwser: newCard.answer
                 }
             }),
             invalidatesTags: [{type: 'Card', id: 'DISPLAY'}]
@@ -51,12 +77,12 @@ export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
         }),
 
         updatedCard: builder.mutation({
-            query: (updatedBundle) => ({
-                url: `/${updatedBundle.id}`,
+            query: (updatedCard) => ({
+                url: `/${updatedCard.id}`,
                 method: 'PUT',
                 body: {
-                    title: updatedBundle?.title,
-                    description: updatedBundle?.description
+                    question: updatedCard?.question,
+                    answer: updatedCard?.answer
                 }
             }),
             invalidatesTags: (result, error, arg) => [{type: 'Card', id: arg.id }]        
