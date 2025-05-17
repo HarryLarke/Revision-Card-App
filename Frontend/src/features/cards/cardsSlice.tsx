@@ -1,26 +1,5 @@
+import type { Card, NewCard, UpdatedCard } from '../../types/cards'
 import { apiCardsSlice } from '../api/apiSlice' 
-
-interface Card {
-    parentBundle: string, //ObjectId
-    _id: string,
-    question: string, 
-    answer: string,
-    createdAt: Date,
-    updatedAt: Date
-}
-
-interface NewCard {
-    parentBundle: string,
-    question: string, 
-    answer: string
-}
-
-interface UpdatedCard {
-    parentBundle: string,
-    question: string, 
-    answer: string
-}
-
 
 export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
     endpoints: builder => ({
@@ -32,69 +11,71 @@ export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
                     .sort(
                         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                     ),//Maybe put an orderer at the top??? 
-            providesTags: (result) => result ? [
-                {type: 'Card', id: 'List'},
-                ...result.map((card: Card) => ({type: 'Card', id: card._id}))
+            providesTags: (result: Card[] | undefined) => result ? [
+                {type: 'Card', id: 'LIST'},
+                ...result.map((card: Card) => ({type: 'Card' as const, id: card._id}))
             ]
-                : [{type: 'Card', id:'List'}],
+                : [{type: 'Card', id:'LIST'}],
+        }),
+        //Might be able to add an filter option post query?
+        getCardById: builder.query<Card, string>({
+            query: (id) => `/${id}`,
+            transformResponse: (responseData: Card) => responseData, 
+            providesTags: (result: Card | undefined) => [{type: 'Card', id: 'LIST'}] //Maybe change this... it's only for one card...
         }),
 
         getCardsByBundleId: builder.query<Card[], string>({
-            query: (bundleId: string) => `/bundles/${bundleId}`,
+            query: (bundleId) => `/bundles/${bundleId}`,
             transformResponse: (responseData: Card[]) => responseData
             .slice()
             .sort(
                 (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
             ),
-            providesTags: (result) => result ? [
-                {type: 'Card', id: 'List'},
-                ...result.map((card: Card) => ({type: 'Card', id: card._id}))
+            providesTags: (result: Card[] | undefined) => result ? [
+                {type: 'Card', id: 'LIST'},
+                ...result.map((card: Card) => ({type: 'Card' as const, id: card._id}))
             ]
-                : [{type: 'Card', id:'List'}],
+                : [{type: 'Card', id:'LIST'}],
         }),
         //I think having these variable is good, just because It does not require both just one?
         //need get cards via parent bundle id! 
-        addCard: builder.mutation<NewCard[], string>({
-            query: (newCard: NewCard) => ({
+        //Handling the id's the Tags worries me a bit?
+
+        addCard: builder.mutation<Card, {_id: string, newCard: NewCard}>({
+            query: ({newCard}) => ({
                 url: '',
                 method: 'POST',
-                body: {
-                    parentBundle: newCard.parentBundle,
-                    question: newCard.question,
-                    anwser: newCard.answer
-                }
+                body: newCard
             }),
-            invalidatesTags: [{type: 'Card', id: 'DISPLAY'}]
+            invalidatesTags:  (result, error, {_id}) => [{type: 'Card', id: _id}, {type: 'Card', id:'LIST'}]
+        }), //Where is this ID coming from??
+
+        deleteCard: builder.mutation<void, string>({
+            query: (_id) => ({
+                url: `/${_id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: (result, error, _id) => [{type: 'Card', _id}, {type: 'Card', id:'LIST'}]
         }),
 
-        deleteCard: builder.mutation({
-            query: ({id}) => ({
-                url: `/${id}`,
-                method: 'DELETE',
-                body: {id}
-            }),
-            invalidatesTags: (result, error, arg) => [{type: 'Card', id: arg.id }]
-        }),
-
-        updatedCard: builder.mutation({
-            query: (updatedCard) => ({
-                url: `/${updatedCard.id}`,
+        updatedCard: builder.mutation<Card, {_id: string, updatedCard: UpdatedCard}>({
+            query: ({updatedCard, _id}) => ({
+                url: `/${_id}`,
                 method: 'PUT',
-                body: {
-                    question: updatedCard?.question,
-                    answer: updatedCard?.answer
-                }
+                body: updatedCard
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'Card', id: arg.id }]        
+            invalidatesTags: (result, error, {_id}) => [{type: 'Card', id:_id}, {type: 'Card', id:'LIST'}]        
         })
     })
 })
 
 export const { 
-    useGetCardsQuery,
-    useAddCardMutation,
-    useDeleteCardMutation,
-    useUpdateCardMutation
+   useGetCardsQuery, 
+   useGetCardByIdQuery,
+   useGetCardsByBundleIdQuery,
+   useAddCardMutation,
+   useDeleteCardMutation,
+   useUpdatedCardMutation
 } = extendedApiCardsSlice
 
 
