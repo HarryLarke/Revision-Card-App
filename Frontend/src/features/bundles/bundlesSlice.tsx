@@ -1,66 +1,47 @@
 import { apiBundlesSlice } from '../api/apiSlice' 
-
-interface bundle {
-    title: string, 
-    description: string,
-    timeDate: string,
-    _id: string
-}
-
-interface loadedBundles {
-    bundles: bundle[]
-}
+import type { Bundle, NewBundle, UpdatedBundle } from '../../types/bundles'
 
 export const extendedApiBundlesSlice = apiBundlesSlice.injectEndpoints({
     endpoints: builder => ({
-        getBundles: builder.query({
+        getBundles: builder.query<Bundle [], void>({
             query: () => '',
-            transformResponse: responseData => {
-                const loadedBundles = responseData.map(item => {
-                    return item
-                })
-                return loadedBundles 
-                //Will find a method to organise timeDate order. 
-                //Maybe implement setting to vary how these are ordered i.e. alphabetical order etc.
-            }, //Make sure IDs are chill and matching...
-            providesTags: (result, error, arg) => [
-                {type: 'Bundle', id: 'DISPLAY'},
-                result.ids.map(id => ({type:'Bundle', id}))
-            ]
+            transformResponse: (responseData: Bundle[]) => 
+                responseData
+                .slice()
+                .sort(
+                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                )
+            , 
+            providesTags: (result: Bundle []| undefined) => result ? [
+                {type: 'Bundle', id:'LIST'},
+                ...result.map((bundle) => ({type:'Bundle' as const, id: bundle._id}))]
+                : [{type: 'Bundle', id:'LIST'}]
         }),
-        //I think having these variable is good, just because It does not require both just one?
 
-        addBundle: builder.mutation({
-            query: (newBundle) => ({
+        addBundle: builder.mutation<Bundle, {_id: string, newBundle: NewBundle}>({
+            query: ({newBundle}) => ({
                 url: '',
                 method: 'POST',
-                body: {
-                    title: newBundle?.title,
-                    description: newBundle?.description
-                }
+                body: newBundle
             }),
-            invalidatesTags: [{type: 'Bundle', id: 'DISPLAY'}]
+            invalidatesTags: (result, error, {_id}) => [{type: 'Bundle', id: _id}, {type: 'Bundle', id:'LIST'}]
         }),
 
-        deleteBundle: builder.mutation({
-            query: ({id}) => ({
-                url: `/${id}`,
+        deleteBundle: builder.mutation<void, string>({
+            query: (_id) => ({
+                url: `/${_id}`,
                 method: 'DELETE',
-                body: {id}
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'Bundle', id: arg.id }]
+            invalidatesTags: (result, error, _id) => [{type: 'Bundle', id:_id}, {type: 'Bundle', id:'LIST'}]
         }),
 
-        updatedBundle: builder.mutation({
-            query: (updatedBundle) => ({
-                url: `/${updatedBundle.id}`,
+        updatedBundle: builder.mutation<Bundle, {_id: string, updatedBundle: UpdatedBundle}>({
+            query: ({updatedBundle, _id}) => ({
+                url: `/${_id}`,
                 method: 'PUT',
-                body: {
-                    title: updatedBundle?.title,
-                    description: updatedBundle?.description
-                }
+                body: updatedBundle
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'Bundle', id: arg.id }]        
+            invalidatesTags: (result, error, {_id}) => [{type: 'Bundle', id: _id}, {type: 'Bundle', id: 'LIST'}]        
         })
     })
 })
@@ -69,7 +50,7 @@ export const {
     useGetBundlesQuery,
     useAddBundleMutation,
     useDeleteBundleMutation,
-    useUpdateBundleMutation
+    useUpdatedBundleMutation
 } = extendedApiBundlesSlice
 
 //We will need get by ID query too! - important to get the application works as efficiently and optimately as possible!!

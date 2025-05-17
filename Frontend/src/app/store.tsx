@@ -1,8 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apiBundlesSlice, apiCardsSlice } from "../features/api/apiSlice";
+import { extendedApiCardsSlice } from "../features/cards/cardsSlice";
+import { extendedApiBundlesSlice } from "../features/bundles/bundlesSlice";
+
 
 export const store = configureStore({
-
+    reducer: {
+        [extendedApiCardsSlice.reducerPath]: extendedApiCardsSlice.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(extendedApiCardsSlice.middleware)
 })
 
 //Will need to sort out Slices?
