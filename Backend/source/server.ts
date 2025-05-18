@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('../../dotenv').config()
 import mongoose from "mongoose"
 import express from "express"
 import path from "path"
