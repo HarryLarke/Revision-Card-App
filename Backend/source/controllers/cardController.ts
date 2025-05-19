@@ -74,9 +74,9 @@ export const getCard = async (req: Request, res: Response): Promise<void> => {
         res.status(400).json({'message': 'Card ID required.'})
         return 
     }
-    const card = await Card.findOne({_id: req.body.id}).exec()
+    const card = await Card.findOne({_id: req.params.id}).exec()
     if(!card) {
-        res.status(204).json({'message': `No card ID matches for: ${req.body.id}`})
+        res.status(204).json({'message': `No card ID matches for: ${req.params.id}`})
         return 
     }
     res.json(card)

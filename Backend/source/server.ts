@@ -1,4 +1,4 @@
-require('../../dotenv').config()
+require('dotenv').config()
 import mongoose from "mongoose"
 import express from "express"
 import path from "path"
@@ -50,3 +50,4 @@ mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     app.listen(PORT, () => {console.log(`Server running on port: ${PORT}`)})
 })
+
