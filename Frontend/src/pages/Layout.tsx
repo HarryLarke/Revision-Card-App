@@ -4,12 +4,12 @@ import Header from '../components/Header'
 
 const Layout = () => {
     return (
-        <>
-        <Header/>
-        <main>
+        <div className="Body">
+            <Header/>
+            <main className="App">
             <Outlet/>
-        </main>
-        </>
+            </main>
+        </div>
     )
 }
 

@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom"
+import {ROUTES} from '../routes/routes'
 
 const Header = () => {
     return(
-        <header className="header"
+        <header className="Header"
         >  
         <h1>Revision Cards</h1> 
-        <Link></Link>
-        <Link></Link>
-        <Link></Link>
+        <Link to={ROUTES.HOME}>Home</Link>
         </header>
     )
 }

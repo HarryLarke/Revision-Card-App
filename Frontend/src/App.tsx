@@ -13,27 +13,25 @@ function App() {
 
   return (
     <Routes>
-      <Route>
         <Route path='/' element={<Layout/>}>
 
           {/*User Routes*/}
-          <Route path='/' element={<Home/>}
+          <Route path='/' element={<Home/>}/>
 
           {/*Bundle Routes*/}
           <Route path='/bundle/:id' element={<Bundle/>}/>
-          <Routes path="/bundle/:id/edit" element={<EditBundle/>}/>
-
+          <Route path='/bundle/edit/:id' element={<EditBundle/>}/>
+          
           {/*Card Routes*/}
           <Route path='/card/:id' element={<Card/>}/>
-          <Route path='/card/:id/edit' element={<EditCard/>}/>
+          <Route path='/card/edit/:id' element={<EditCard/>}/>
 
           {/*Practice Routes*/}
-          <Route path='/practice/:id' element={<Practice/>}
+          <Route path='/practice/:id' element={<Practice/>}/>
           
           <Route path='*' element={<Missing/>}/>
 
         </Route>
-      </Route>
     </Routes>
   )
 }

@@ -3,7 +3,7 @@ export const ROUTES = {
     BUNDLE: (id: string) => `/bundle/${id}`,
     EDIT_BUNDLE: (id: string) => `/bundle/edit/${id}`,
     CARD: (id: string) => `/card/${id}`,
-    EDIT_CARD: (id: string) => `/card/${id}/edit`,
+    EDIT_CARD: (id: string) => `/card/edit/${id}`,
     PRACTICE: (id: string) => `/practice/${id}`
 
 }
