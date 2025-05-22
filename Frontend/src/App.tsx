@@ -8,6 +8,8 @@ import Card from './pages/Card'
 import EditCard from './pages/EditCard'
 import Practice from './pages/Practice'
 import Missing from './pages/Missing'
+import CreateBundle from './pages/CreateBundle'
+import CreateCard from './pages/CreateCard'
 
 function App() {
 
@@ -18,11 +20,13 @@ function App() {
           {/*User Routes*/}
           <Route path='/' element={<Home/>}/>
 
-          {/*Bundle Routes*/}
+          {/*Bundle Routes*/}     
+          <Route path='/bundle/create' element={<CreateBundle/>}/>
           <Route path='/bundle/:id' element={<Bundle/>}/>
           <Route path='/bundle/edit/:id' element={<EditBundle/>}/>
           
           {/*Card Routes*/}
+          <Route path='/card/create' element={<CreateCard/>}/>
           <Route path='/card/:id' element={<Card/>}/>
           <Route path='/card/edit/:id' element={<EditCard/>}/>
 

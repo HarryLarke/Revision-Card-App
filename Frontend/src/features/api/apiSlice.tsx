@@ -1,18 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const apiBundlesSlice = createApi({
+export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'https://localhost:3500/bundles'}),
-    tagTypes: ['Bundle'],
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3500'}),
+    tagTypes: ['Bundle', 'Card'],
     endpoints: builder => ({})
 })
 
-export const apiCardsSlice = createApi({
-    reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3500/cards'}),
-    tagTypes: ['Card'],
-    endpoints: builder => ({})
-})
 
 
 

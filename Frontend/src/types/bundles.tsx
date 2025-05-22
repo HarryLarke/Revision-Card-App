@@ -15,3 +15,9 @@ export interface UpdatedBundle {
     title: string, 
     descrption: string
 }
+
+export interface DisplayBundle {
+    _id: string, 
+    title: string, 
+    description: string 
+}

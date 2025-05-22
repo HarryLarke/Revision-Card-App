@@ -4,7 +4,7 @@ import allowOrigins from "./allowOrigins";
 
 const corsOptions: CorsOptions = {
     origin: (origin, callback) => {
-        if(!origin || allowOrigins.indexOf(origin) !== -1 || !origin) {
+        if(allowOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))

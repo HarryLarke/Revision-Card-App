@@ -1,10 +1,10 @@
+import { apiSlice } from '../api/apiSlice' 
 import type { Card, NewCard, UpdatedCard } from '../../types/cards'
-import { apiCardsSlice } from '../api/apiSlice' 
 
-export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
+export const extendedApiCardsSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getCards: builder.query<Card[], void>({
-            query: () => '',
+            query: () => '/cards',
             transformResponse: (responseData: Card[]) => 
                 responseData
                     .slice()
@@ -19,13 +19,13 @@ export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
         }),
         //Might be able to add an filter option post query?
         getCardById: builder.query<Card, string>({
-            query: (id) => `/${id}`,
+            query: (id) => `/cards/${id}`,
             transformResponse: (responseData: Card) => responseData, 
             providesTags: (result: Card | undefined) => [{type: 'Card', id: 'LIST'}] //Maybe change this... it's only for one card...
         }),
 
         getCardsByBundleId: builder.query<Card[], string>({
-            query: (bundleId) => `/bundles/${bundleId}`,
+            query: (bundleId) => `/cards/${bundleId}`,
             transformResponse: (responseData: Card[]) => responseData
             .slice()
             .sort(
@@ -43,7 +43,7 @@ export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
 
         addCard: builder.mutation<Card, {_id: string, newCard: NewCard}>({
             query: ({newCard}) => ({
-                url: '',
+                url: '/cards',
                 method: 'POST',
                 body: newCard
             }),
@@ -52,7 +52,7 @@ export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
 
         deleteCard: builder.mutation<void, string>({
             query: (_id) => ({
-                url: `/${_id}`,
+                url: `/cards/${_id}`,
                 method: 'DELETE'
             }),
             invalidatesTags: (result, error, _id) => [{type: 'Card', _id}, {type: 'Card', id:'LIST'}]
@@ -60,7 +60,7 @@ export const extendedApiCardsSlice = apiCardsSlice.injectEndpoints({
 
         updatedCard: builder.mutation<Card, {_id: string, updatedCard: UpdatedCard}>({
             query: ({updatedCard, _id}) => ({
-                url: `/${_id}`,
+                url: `/cards/${_id}`,
                 method: 'PUT',
                 body: updatedCard
             }),

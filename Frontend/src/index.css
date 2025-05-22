@@ -1,23 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Cookie&family=Delius+Swash+Caps&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@400..700&family=Cookie&family=Delius+Swash+Caps&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@400..700&family=Cookie&family=Delius+Swash+Caps&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
   --BLACK: #202020;
   --GREY: #50514F; 
   --RED: #F25F5C;
-  --YELLOW: #FFE066;
-  --BLUE: #133f51;
-  --TILE: #1957718f;
-  --CREAM: #FFF7D6;
+  --YELLOW: #fa9c0e;
+  --BLUE: #113240;
+  --TILE: #195771d1;
+  --CREAM: #ffffff;
   --WHITE: whitesmoke;
-  --BACKGROUND: rgb(59, 59, 59);
+  --BACKGROUND: linear-gradient(-135deg,rgba(2, 0, 36, 1) 0%, rgb(6, 6, 43) 51%, rgb(38, 38, 61) 64%, rgb(64, 66, 71) 100%);
+  --BOX-SHADOW: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  --BOX-GLOW: 5px 5px 2px 2px rgba(255, 250, 198, 0.319);
 
-
-  --FONT_ONE: "Arvo", serif;
+  --FONT_ONE: "Montserrat", sans-serif;
   --FONT_TWO: "Caveat", cursive;
 
   --BORDER-LARGE: 5px solid var(--BLACK);
+  --BORDER-MEDIUM: 3px solid var(--BLACK);
 
 }
 
@@ -46,8 +48,8 @@ html {
   justify-content: center;
   align-items: center;
 
-  background-color: var(--BACKGROUND);
-  color: var(--WHITE);
+  background: var(--BACKGROUND);
+  color: var(--CREAM);
 }
 
 body {
@@ -57,8 +59,14 @@ body {
 
 .Body {
   width: 70%;
+
 } 
 
+
+a {
+  color: aliceblue;
+  text-decoration: none;
+}
 /*PAGES*/
 
 .App {
@@ -73,24 +81,23 @@ body {
   border-right: var(--BORDER-LARGE);
   border-left: var(--BORDER-LARGE);
   background-color: var(--TILE);
-
 }
 
 /*COMPONENTS*/
 
 .Header {
-  position: absolute;
-  width: 70%;
+  width: 100%;
   height: 10vh;
 
   padding: 1rem;
   grid-area: 1rem;
+  gap: 2rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
   background-color: var(--BLUE);
-  border: var(--BORDER-LARGE)
+  border: var(--BORDER-LARGE);
 } 
 
 h1 {
@@ -109,6 +116,8 @@ h1 {
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 1rem;
+  gap: 1rem;
 } 
 
 .Section-Single {
@@ -119,4 +128,48 @@ h1 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
 } 
+
+.Bundle {
+  width: 250px;
+  height: 330px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  padding: 1rem;
+  gap: 2rem;
+
+  border: solid 3px rgb(50, 49, 49);
+  border-radius: 10px;
+  background-color: var(--BLACK);
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.Icon {
+  width: 100px;
+}
+
+.Home-Icon {
+  width: 60px;
+  background-color: var(--BLACK);
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+/*CHANGES*/
+
+.Centre {
+  align-items: center;
+  justify-content: center;
+}
+
+/*ANIMATIONS*/
+
+.Bundle:hover,
+.Home-Icon:hover {
+  scale: 105%;
+}

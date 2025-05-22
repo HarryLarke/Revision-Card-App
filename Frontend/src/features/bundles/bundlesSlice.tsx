@@ -1,17 +1,15 @@
-import { apiBundlesSlice } from '../api/apiSlice' 
+import { apiSlice } from '../api/apiSlice' 
 import type { Bundle, NewBundle, UpdatedBundle } from '../../types/bundles'
 
-export const extendedApiBundlesSlice = apiBundlesSlice.injectEndpoints({
+export const extendedApiBundlesSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getBundles: builder.query<Bundle [], void>({
-            query: () => '',
-            transformResponse: (responseData: Bundle[]) => 
-                responseData
-                .slice()
-                .sort(
-                    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                )
-            , 
+            query: () => '/bundles',
+            transformResponse: (responseData: Bundle[]) => {
+                console.log('Response Data:', responseData)
+                    return responseData.slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            },
+    
             providesTags: (result: Bundle []| undefined) => result ? [
                 {type: 'Bundle', id:'LIST'},
                 ...result.map((bundle) => ({type:'Bundle' as const, id: bundle._id}))]
@@ -20,7 +18,7 @@ export const extendedApiBundlesSlice = apiBundlesSlice.injectEndpoints({
 
         addBundle: builder.mutation<Bundle, {_id: string, newBundle: NewBundle}>({
             query: ({newBundle}) => ({
-                url: '',
+                url: '/bundles',
                 method: 'POST',
                 body: newBundle
             }),
@@ -29,7 +27,7 @@ export const extendedApiBundlesSlice = apiBundlesSlice.injectEndpoints({
 
         deleteBundle: builder.mutation<void, string>({
             query: (_id) => ({
-                url: `/${_id}`,
+                url: `/bundles/${_id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, _id) => [{type: 'Bundle', id:_id}, {type: 'Bundle', id:'LIST'}]
@@ -37,7 +35,7 @@ export const extendedApiBundlesSlice = apiBundlesSlice.injectEndpoints({
 
         updatedBundle: builder.mutation<Bundle, {_id: string, updatedBundle: UpdatedBundle}>({
             query: ({updatedBundle, _id}) => ({
-                url: `/${_id}`,
+                url: `/bundles/${_id}`,
                 method: 'PUT',
                 body: updatedBundle
             }),

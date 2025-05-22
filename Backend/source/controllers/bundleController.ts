@@ -8,7 +8,7 @@ export const getAllBundles = async (req: Request, res: Response): Promise<void> 
         res.status(204).json({'message': 'No Bundles Found'})
         return 
     }
-    res.json({bundles})
+    res.json(bundles)
 }
 
 export const createNewBundle  = async (req: Request, res: Response): Promise<void> => {
