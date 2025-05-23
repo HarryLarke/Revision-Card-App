@@ -1,7 +1,7 @@
 import { useGetCardsByBundleIdQuery } from '../features/cards/cardsSlice'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
-import AddBundle from '../components/AddBundle'
+import AddCard from '../components/AddCard'
 import Card from '../components/Card'
 
 
@@ -45,17 +45,20 @@ const Bundle = () => {
       showAnswers={showAnswers}
       /> )}
 
-      <AddBundle/>
+      <AddCard/>
     </section>
   }
 
   return (
   <>
-        <section>
+        <section className='Header-Two'>
             <h2>Insert Bundle Name here...</h2>
             <button
             onClick={() => {setShowAnswers(prev => !prev)}}
             >{handleTitle(showAnswers)} Answers</button>
+            <Link to={`/practice/${bundleId}`}
+            >Pracice</Link>
+
 
         </section>
 

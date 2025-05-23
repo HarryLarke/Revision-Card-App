@@ -41,13 +41,13 @@ export const extendedApiCardsSlice = apiSlice.injectEndpoints({
         //need get cards via parent bundle id! 
         //Handling the id's the Tags worries me a bit?
 
-        addCard: builder.mutation<Card, {_id: string, newCard: NewCard}>({
-            query: ({newCard}) => ({
+        addCard: builder.mutation<Card, {question:string, answer:string, parentBundle:string | undefined}>({
+            query: (newCard) => ({
                 url: '/cards',
                 method: 'POST',
                 body: newCard
             }),
-            invalidatesTags:  (result, error, {_id}) => [{type: 'Card', id: _id}, {type: 'Card', id:'LIST'}]
+            invalidatesTags:  (result, error) => [{type: 'Card', id:'LIST'}]
         }), //Where is this ID coming from??
 
         deleteCard: builder.mutation<void, string>({

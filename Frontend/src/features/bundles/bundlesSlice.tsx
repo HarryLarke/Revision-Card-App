@@ -17,13 +17,13 @@ export const extendedApiBundlesSlice = apiSlice.injectEndpoints({
                 : [{type: 'Bundle', id:'LIST'}]
         }),
 
-        addBundle: builder.mutation<Bundle, {_id: string, newBundle: NewBundle}>({
-            query: ({newBundle}) => ({
+        addBundle: builder.mutation<Bundle, {title: string, description: string}>({
+            query: (newBundle) => ({
                 url: '/bundles',
                 method: 'POST',
                 body: newBundle
             }),
-            invalidatesTags: (result, error, {_id}) => [{type: 'Bundle', id: _id}, {type: 'Bundle', id:'LIST'}]
+            invalidatesTags: (result, error) => [ {type: 'Bundle', id:'LIST'}]
         }),
 
         deleteBundle: builder.mutation<void, string>({

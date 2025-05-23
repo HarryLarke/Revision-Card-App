@@ -5,7 +5,7 @@ const Card: React.FC<DisplayCard> = ({_id, question, answer, showAnswers}) => {
 
     return (
         <Link to={`/card/${_id}`}
-        className='Bundle'>
+        className='Card'>
             <p>{question}</p>
             {showAnswers === true ? <p>{answer}</p> : <br></br>}
             
