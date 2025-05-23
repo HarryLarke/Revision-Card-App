@@ -104,6 +104,10 @@ h1 {
   font-size: 4rem;
 }
 
+h2 {
+  padding: 1rem;
+}
+
 .Font-Changes {
   font-family: var(--FONT_TWO);
 }

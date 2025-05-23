@@ -19,3 +19,9 @@ export interface UpdatedCard {
     answer: string
 }
 
+export interface DisplayCard {
+    _id: string, 
+    question: string,
+    answer: string,
+    showAnswers: boolean
+}

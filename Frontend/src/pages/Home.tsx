@@ -31,7 +31,6 @@ const Home = () => {
       _id={bundle._id}
       title={bundle.title} 
       description={bundle.description}/> )}
-
       <AddBundle/>
     </section>
   }

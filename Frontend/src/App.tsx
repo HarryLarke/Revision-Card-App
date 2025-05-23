@@ -22,16 +22,16 @@ function App() {
 
           {/*Bundle Routes*/}     
           <Route path='/bundle/create' element={<CreateBundle/>}/>
-          <Route path='/bundle/:id' element={<Bundle/>}/>
-          <Route path='/bundle/edit/:id' element={<EditBundle/>}/>
+          <Route path='/bundle/:bundleId' element={<Bundle/>}/>
+          <Route path='/bundle/edit/:bundleId' element={<EditBundle/>}/>
           
           {/*Card Routes*/}
           <Route path='/card/create' element={<CreateCard/>}/>
-          <Route path='/card/:id' element={<Card/>}/>
-          <Route path='/card/edit/:id' element={<EditCard/>}/>
+          <Route path='/card/:cardId' element={<Card/>}/>
+          <Route path='/card/edit/:cardId' element={<EditCard/>}/>
 
           {/*Practice Routes*/}
-          <Route path='/practice/:id' element={<Practice/>}/>
+          <Route path='/practice/:bundleId' element={<Practice/>}/>
           
           <Route path='*' element={<Missing/>}/>
 

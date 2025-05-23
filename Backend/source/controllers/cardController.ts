@@ -18,7 +18,7 @@ export const createNewCard  = async (req: Request, res: Response): Promise<void>
         res.status(400).json({'message': 'Card quesion and answer required.'})
         return 
     }
-    //Still figuring where I will put ID 
+    //Still figuring where I will put ID probably use the params to inject this on the backend??
     else if(!req?.body.parentBundle) {
         res.status(400).json({'message': 'A parent Bundle was NOT assigned to the card'})
         return 
@@ -83,15 +83,15 @@ export const getCard = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const getCardsbyBundleId = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params
+    const id = req.params?.id
     if(!id || !req.params?.id) {
         res.status(400).json({'message': "Card's Parent Bundlle ID required."})
         return
     } 
-    const cards = await Card.find({parentBundle: id}).exec()
+    const cards = await Card.find({parentBundle: req.params.id}).exec()
 
     if(!cards || cards.length === 0) {
-        res.status(204).json({'message': 'No cards in this bundle.'})
+        res.status(204).json({'message': `No cards in this bundle ${req.params.id}`})
         return
     }
     res.json(cards)

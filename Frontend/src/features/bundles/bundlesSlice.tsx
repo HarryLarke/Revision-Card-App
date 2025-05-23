@@ -6,6 +6,7 @@ export const extendedApiBundlesSlice = apiSlice.injectEndpoints({
         getBundles: builder.query<Bundle [], void>({
             query: () => '/bundles',
             transformResponse: (responseData: Bundle[]) => {
+                if(responseData === null) return []
                 console.log('Response Data:', responseData)
                     return responseData.slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
             },
@@ -55,3 +56,4 @@ export const {
 //optimistic updates?? 
 
 //Refractor with select by ID once up and working...
+//Will need to get bund by ID for update bundle - probably better than adding a filter to the page 

@@ -1,4 +1,3 @@
-
 const HomeLogo = ({style}) => {
 
 return (

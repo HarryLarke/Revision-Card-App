@@ -5,12 +5,13 @@ export const extendedApiCardsSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getCards: builder.query<Card[], void>({
             query: () => '/cards',
-            transformResponse: (responseData: Card[]) => 
+            transformResponse: (responseData: Card[]) => {
+                if(!Array.isArray(responseData)) return []
                 responseData
                     .slice()
                     .sort(
-                        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                    ),//Maybe put an orderer at the top??? 
+                        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())},
+                        //Maybe put an orderer at the top??? 
             providesTags: (result: Card[] | undefined) => result ? [
                 {type: 'Card', id: 'LIST'},
                 ...result.map((card: Card) => ({type: 'Card' as const, id: card._id}))
@@ -24,13 +25,12 @@ export const extendedApiCardsSlice = apiSlice.injectEndpoints({
             providesTags: (result: Card | undefined) => [{type: 'Card', id: 'LIST'}] //Maybe change this... it's only for one card...
         }),
 
-        getCardsByBundleId: builder.query<Card[], string>({
-            query: (bundleId) => `/cards/${bundleId}`,
-            transformResponse: (responseData: Card[]) => responseData
-            .slice()
-            .sort(
-                (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            ),
+        getCardsByBundleId: builder.query<Card[], {bundleId: string | undefined}>({
+            query: ({bundleId}) => `/cards/bundles/${bundleId}`,
+            transformResponse: (responseData: Card[]) => {
+                if(responseData === null) return []
+                    console.log('Response Data:', responseData) //Need some error handler?? 204 no content...
+                    return responseData.slice().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())},
             providesTags: (result: Card[] | undefined) => result ? [
                 {type: 'Card', id: 'LIST'},
                 ...result.map((card: Card) => ({type: 'Card' as const, id: card._id}))
