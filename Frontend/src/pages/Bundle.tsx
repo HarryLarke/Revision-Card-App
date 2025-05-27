@@ -10,7 +10,7 @@ const Bundle = () => {
   const { bundleId } = useParams()
   const [ showAnswers, setShowAnswers ] = useState(false)
 
-  const handleTitle = (showAnswers) => {
+  const handleShow = (showAnswers) => {
     if(showAnswers === true) {
       return 'Hide'
     } return 'Show'
@@ -45,7 +45,7 @@ const Bundle = () => {
       showAnswers={showAnswers}
       /> )}
 
-      <AddCard/>
+      <AddCard bundleId={bundleId}/>
     </section>
   }
 
@@ -55,10 +55,9 @@ const Bundle = () => {
             <h2>Insert Bundle Name here...</h2>
             <button
             onClick={() => {setShowAnswers(prev => !prev)}}
-            >{handleTitle(showAnswers)} Answers</button>
+            >{handleShow(showAnswers)} Answers</button>
             <Link to={`/practice/${bundleId}`}
-            >Pracice</Link>
-
+            >Practice</Link>
 
         </section>
 

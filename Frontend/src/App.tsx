@@ -26,7 +26,7 @@ function App() {
           <Route path='/bundle/edit/:bundleId' element={<EditBundle/>}/>
           
           {/*Card Routes*/}
-          <Route path='/card/:bundleId' element={<CreateCard/>}/>
+          <Route path='/card/create/:bundleId' element={<CreateCard/>}/>
           <Route path='/card/:cardId' element={<Card/>}/>
           <Route path='/card/edit/:cardId' element={<EditCard/>}/>
 

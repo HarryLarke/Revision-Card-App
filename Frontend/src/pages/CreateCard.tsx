@@ -29,7 +29,7 @@ const CreateCard = () => {
                 setAnswer('')
                 navigate('/') //Will need to change this!
             } catch(err) {
-                console.log('Failed to post buncle:', err)
+                console.log('Failed to post bundle:', err)
             }
         }
     }

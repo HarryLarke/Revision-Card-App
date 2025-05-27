@@ -3,10 +3,10 @@ import { ROUTES } from '../routes/routes'
 
 import AddIcon from '../icons/AddIcon'
 
-const AddCard = () => {
+const AddCard = ({bundleId}) => {
 
     return(
-        <Link to={ROUTES.CARD_CREATE}
+        <Link to={`/card/create/${bundleId}`}
         className='Card'
         >
         <AddIcon style={'Icon'}/>

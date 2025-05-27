@@ -197,6 +197,26 @@ label {
   transition: 0.3s;
 }
 
+.ViewCard {
+  width: 450px;
+  height: 530px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  padding: 1rem;
+  gap: 2rem;
+
+  font-weight: 600;
+  
+
+  border: solid 3px rgb(50, 49, 49);
+  border-radius: 10px;
+  background-color: var(--BLACK);
+  border-radius: 5px;
+
+}
 form {
   width: 400px;
   height: 440px;
