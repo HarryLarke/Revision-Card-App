@@ -176,8 +176,8 @@ label {
 } 
 
 .Bundle {
-  width: 300px;
-  height: 330px;
+  width: 280px;
+  height: 320px;
 
   display: flex;
   flex-direction: column;

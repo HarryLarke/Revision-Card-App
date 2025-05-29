@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useParams, Link } from "react-router"
 import { useGetCardsByBundleIdQuery } from "../features/cards/cardsSlice"
 
+import useKeys from "../hooks/useKeys"
+
 import  ViewCard from "../components/ViewCard"
 
 const Practice = () => {
@@ -21,15 +23,14 @@ const Practice = () => {
 
       //May have some sort guard on these instead of using ?
       const cardlength: number | undefined = cards?.length
-
-      const canNextOrPrev: boolean = count < cardlength
+      const canNext: boolean = count >= cardlength
+      const canPrev: boolean = count <= 0
       //Still abit buggy!
 
       const handleCount = (method: string) => {
         const card = cards?.[count]
         if(method === 'question') return card?.question 
         else if(method === 'answer') return card?.answer 
-        
         return 
       }
 
@@ -38,6 +39,17 @@ const Practice = () => {
         return 'Hide'
         } return 'Show'
     }
+
+    useKeys("ArrowLeft", () => {if(!canPrev) {setCount(count - 1)
+                setShowAnswer(false)
+        }})
+
+    useKeys("ArrowRight", () => {if(!canNext) {setCount(count + 1)
+                setShowAnswer(false)
+    }})
+
+    
+    useKeys("Space", () => {setShowAnswer(prev => !prev)})
 
     //Will a system of disabiling the buttons
     return (
@@ -56,7 +68,7 @@ const Practice = () => {
         <section className='Box'>
 
             <button
-            disabled={canNextOrPrev}
+            disabled={canPrev}
             onClick={() => {setCount(count - 1)
                 setShowAnswer(false)
             }}
@@ -67,7 +79,7 @@ const Practice = () => {
             >{handleShow(showAnswer)} Anwser</button>
 
             <button 
-            disabled={!canNextOrPrev}
+            disabled={canNext}
             onClick={() => {setCount(count + 1)
                 setShowAnswer(false)
             }}
