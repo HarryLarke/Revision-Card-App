@@ -36,22 +36,6 @@ export const createNewCard  = async (req: Request, res: Response): Promise<void>
     }
 }
 
-export const updateCard = async (req: Request, res: Response): Promise<void> => {
-    if(!req?.body?.id) {
-        res.status(401).json({'message': 'ID parameter required.'})
-        return 
-    }
-    const card = await Card.findOne({_id: req.body.id}).exec()//Make id and _id allign
-    if(!card) {
-        res.status(204).json({'message': `No card ID matches for: ${req.body.id}`})
-        return
-    }
-    if(req.body?.question) { card.question = req.body.question}
-    if(req.body?.answer) { card.answer = req.body.description} //Maybe implement a re-assign parent bundle??
-    const result = await card.save()
-    res.json(result)
-}
-
 //Should this be in the ID section on the router?
 export const deleteCard = async (req: Request, res:Response): Promise<void> => {
     if(!req.params?.id) {
@@ -66,7 +50,7 @@ export const deleteCard = async (req: Request, res:Response): Promise<void> => {
     const result = await card.deleteOne({
         _id: req.body.id
     })
-    res.json({result})
+    res.json(result)
 }
 
 export const getCard = async (req: Request, res: Response): Promise<void> => {
@@ -80,6 +64,23 @@ export const getCard = async (req: Request, res: Response): Promise<void> => {
         return 
     }
     res.json(card)
+}
+
+export const updateCard = async (req: Request, res: Response): Promise<void> => {
+    if(!req?.params?.id) {
+        res.status(400).json({'message': 'ID parameter required.'})
+        return 
+    }
+    const card = await Card.findOne({_id: req.params.id}).exec()//Make id and _id allign
+    if(!card) {
+        res.status(404).json({'message': `No card ID matches for: ${req.params.id}`})
+        return
+    }
+
+    if(req.body?.question) { card.question = req.body.question}
+    if(req.body?.answer) { card.answer = req.body.answer} //Maybe implement a re-assign parent bundle??
+    const result = await card.save()
+    res.json(result)
 }
 
 export const getCardsbyBundleId = async (req: Request, res: Response): Promise<void> => {

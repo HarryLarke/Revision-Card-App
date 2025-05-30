@@ -40,7 +40,7 @@ const CreateCard = () => {
             <h2>Add New Card</h2>
         
             <form>
-                <label htmlFor="bundleQuestion">Question:</label>
+                <label htmlFor="question">Question:</label>
                 <textarea 
                     rows={3}
                     cols={35}
@@ -51,7 +51,7 @@ const CreateCard = () => {
                     required
                     />
 
-                <label htmlFor="bundleanswer">Answer:</label>
+                <label htmlFor="answer">Answer:</label>
                 <textarea
                     rows={3}
                     cols={35}

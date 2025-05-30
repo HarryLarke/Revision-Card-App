@@ -6,11 +6,12 @@ const router = express.Router()
 router.route('/')
     .get(getAllCards)
     .post(createNewCard)
-    .put(updateCard)
     .delete(deleteCard)
+    
 
 router.route('/:id')
     .get(getCard)
+    .put(updateCard)
 
 router.route('/bundles/:id')
     .get(getCardsbyBundleId)

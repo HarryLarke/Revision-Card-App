@@ -14,7 +14,7 @@ export interface NewCard {
 }
 
 export interface UpdatedCard {
-    parentBundle: string,
+    _id: string,
     question: string, 
     answer: string
 }

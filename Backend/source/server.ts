@@ -41,7 +41,7 @@ app.all('/', (req, res) => {
     } else (
         res.type('txt').send("404 Not Found")
     )
-})
+}) 
 //Maybe put this process onto a seperate route, to make the server cleaner?
 //In general try to make this file as clean as possible would be nice
 app.use(errorHandler)

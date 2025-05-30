@@ -58,9 +58,9 @@ export const extendedApiCardsSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, _id) => [{type: 'Card', _id}, {type: 'Card', id:'LIST'}]
         }),
 
-        updatedCard: builder.mutation<Card, {_id: string, updatedCard: UpdatedCard}>({
-            query: ({updatedCard, _id}) => ({
-                url: `/cards/${_id}`,
+        updatedCard: builder.mutation<Card, {question: string, answer: string, _id: string}>({
+            query: (updatedCard) => ({
+                url: `/cards/${updatedCard._id}`,
                 method: 'PUT',
                 body: updatedCard
             }),
