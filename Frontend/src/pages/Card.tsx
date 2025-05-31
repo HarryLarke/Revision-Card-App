@@ -1,10 +1,13 @@
 import { useGetCardByIdQuery } from "../features/cards/cardsSlice"
 import { useParams, Link } from "react-router"
 import { useState } from "react"
+import { useSelection } from "../hooks/useSelection"
 
 import ViewCard from "../components/ViewCard"
 
 const Card = () => {
+
+    const { setCard } = useSelection()
     const [ showAnswer, setShowAnswer ] = useState(false)
     const { cardId } = useParams()
 
@@ -14,14 +17,16 @@ const Card = () => {
         isSuccess,
         isError,
         error
-    } = useGetCardByIdQuery(cardId)
+    } = useGetCardByIdQuery(cardId) //Might typeguard this or change types?
 
-
-    const handleShow = (showAnswer) => {
+    if(card) {
+        setCard(card)
+    }
+    const handleShow = (showAnswer: boolean) => {
     if(showAnswer === true) {
       return 'Hide'
     } return 'Show'
-  }
+  } //Could turn this into a hook???
 
   //Would be cool to have this as two columns 
   //Need to probablly have the loading and error stuff on display?

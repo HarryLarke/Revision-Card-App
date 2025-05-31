@@ -1,16 +1,18 @@
 import { useGetCardsByBundleIdQuery } from '../features/cards/cardsSlice'
 import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
+import { useSelection } from '../hooks/useSelection'
 import AddCard from '../components/AddCard'
 import Card from '../components/Card'
 
 
 const Bundle = () => {
 
+  const { selectedBundle } = useSelection()
   const { bundleId } = useParams()
   const [ showAnswers, setShowAnswers ] = useState(false)
 
-  const handleShow = (showAnswers) => {
+  const handleShow = (showAnswers: boolean) => {
     if(showAnswers === true) {
       return 'Hide'
     } return 'Show'
@@ -52,12 +54,13 @@ const Bundle = () => {
   return (
   <>
         <section className='Header-Two'>
-            <h2>Insert Bundle Name here...</h2>
+            <h2>{selectedBundle?.title}</h2>
             <button
             onClick={() => {setShowAnswers(prev => !prev)}}
             >{handleShow(showAnswers)} Answers</button>
             <Link to={`/practice/${bundleId}`}
             >Practice</Link>
+            <Link to={`/bundle/edit/${bundleId}`}>Edit</Link>
 
         </section>
 

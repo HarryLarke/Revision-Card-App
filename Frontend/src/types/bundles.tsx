@@ -12,8 +12,8 @@ export interface NewBundle {
 }
 
 export interface UpdatedBundle {
-    title: string, 
-    descrption: string
+    title: string | undefined, 
+    description: string | undefined
 }
 
 export interface DisplayBundle {

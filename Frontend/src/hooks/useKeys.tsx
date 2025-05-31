@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useKeys = (targetKey, callback) => {
+const useKeys = (targetKey: string, callback) => {
     useEffect(() => {
         const keyHandler = (e) => {
             if(e.code === targetKey) {

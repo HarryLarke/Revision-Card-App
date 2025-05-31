@@ -1,21 +1,22 @@
 import { useSelector, useDispatch } from "react-redux"; 
 
 import type { RootState, AppDispatch } from "../app/store"
-import type { Card } from '../types/ui'
+import type { Bundle, Card } from '../types/ui'
 
 import {
-    setSelectedBundleTitle,
+    setSelectedBundle,
     setSelectedCard
 } from '../features/ui/uiSlice'
 
+//May devote this to UI Selection??
 export const useSelection = () => {
     const dispatch = useDispatch<AppDispatch>()
 
-    const selectedBundleTitle = useSelector((state: RootState) => state.ui.selectedBundleTitle)
+    const selectedBundle = useSelector((state: RootState) => state.ui.selectedBundle)
     const selectedCard = useSelector((state: RootState) => state.ui.selectedCard) 
 
-    const setBundleTitle = (title: string | null) => {
-        dispatch(setSelectedBundleTitle(title))
+    const setBundle = (bundle : Bundle | null) => {
+        dispatch(setSelectedBundle(bundle))
     }
 
     const setCard = (card: Card | null) => {
@@ -23,10 +24,10 @@ export const useSelection = () => {
     }
 
     return {
-    selectedBundleTitle,
+    selectedBundle,
     selectedCard,
     
-    setBundleTitle,
+    setBundle,
     setCard
 }
 

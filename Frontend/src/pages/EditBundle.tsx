@@ -1,72 +1,82 @@
+import { useParams, useNavigate } from 'react-router'
+import { useState } from 'react'
+
+import { useSelection } from '../hooks/useSelection'
+import { useUpdatedBundleMutation } from '../features/bundles/bundlesSlice'
 
 const EditBundle = () => {
-    //Do Change parent Bundle? 
 
-        const [ question, setQuestion ] = useState('')
-            const [ answer, setAnswer ] = useState('')
-            //maybe later put userID in - however this might be handled on the backend?
-            //Find the best method in sourcing parent bundle ID!
-        
-            //Maybe add more accessibilty elements to the page??? 
-            const onQuestionChange = e => setQuestion(e.target.value)
-            const onAnswerChange = e => setAnswer(e.target.value)
+    const { selectedBundle } = useSelection()
+    const { bundleId } = useParams()
+    const navigate = useNavigate()
+
+    const [ updateBundle, {isLoading} ] = useUpdatedBundleMutation()
+
+    const [ title, setTitle ] = useState(selectedBundle?.title)
+    const [ description, setDescription ] = useState(selectedBundle?.description)
+
+    //Could have a parent bundle selector - just wondering how I woudl insert that data... err closer to implement a useContext??
+
+    const onTitleChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setTitle(e.target.value)
+    const onDescriptionChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)
             
-            const canSave = [question, answer].every(Boolean) && !isLoading
+    const canSave = [title, description].every(Boolean) && !isLoading
+ 
         
-            const HandleSaveCard = async() => {
-                if(canSave) {
-                    try{
-                        await newCard({question, answer, parentBundle: bundleId}).unwrap()
+    const HandleUpdateBundle = async() => {
+        if(canSave && bundleId) {
+            const bundle = {title, description}
+
+            try{
+                await updateBundle({bundle, _id:bundleId}).unwrap() //change slice to string | undefined - don't know if best??
         
-                        setQuestion('')
-                        setAnswer('')
-                        navigate('/') //Will need to change this!
+                setTitle('')
+                setDescription('')
+                navigate('/') //Will need to change this!
                     } catch(err) {
-                        console.log('Failed to post bundle:', err)
+                        console.log('Failed to post :', err)
                     }
                 }
             }
-        
-    return (
-                <>
+        return(
+              <>
                 <section className="Section-Single">
-                    <h2>Add New Card</h2>
+                    <h2>Edit Bundle</h2>
                 
                     <form>
-                        <label htmlFor="question">Question:</label>
+                        <label htmlFor="title">Title</label>
                         <textarea 
                             rows={3}
                             cols={35}
-                            id="question"
-                            name="question"
-                            value={question}
-                            onChange={onQuestionChange} 
+                            id="title"
+                            name="title"
+                            value={title}
+                            onChange={onTitleChange} 
                             required
                             />
-        
-                        <label htmlFor="answer">Answer:</label>
+
+                        <label htmlFor="description">Desription:</label>
                         <textarea
                             rows={3}
                             cols={35}
-                            id='answer'
-                            name='answer'
-                            value={answer}
-                            onChange={onAnswerChange}
+                            id='description'
+                            name='description'
+                            value={description}
+                            onChange={onDescriptionChange}
                             required/>
-        
+
                         <button type='button' 
                         className='Save-Button'
-                        onClick={HandleSaveCard}
+                        onClick={HandleUpdateBundle}
                         disabled={!canSave}
                         >Save</button>
                     </form>
-        
+
                 </section> 
-                </>
-            )
-        }
+            </>
+        ) 
         
+        
+}
 
-
-
-export default EditBundle 
+export default EditBundle

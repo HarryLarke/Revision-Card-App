@@ -12,8 +12,8 @@ const CreateBundle = () => {
 
 
     //Maybe add more accessibilty elements to the page??? 
-    const onTitleChange = e => setTitle(e.target.value)
-    const onDescriptionChange = e => setDescription(e.target.value)
+    const onTitleChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setTitle(e.target.value)
+    const onDescriptionChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)
     
     const canSave = [title, description].every(Boolean) && !isLoading
 

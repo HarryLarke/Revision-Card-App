@@ -58,14 +58,14 @@ export const extendedApiCardsSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, _id) => [{type: 'Card', _id}, {type: 'Card', id:'LIST'}]
         }),
 
-        updatedCard: builder.mutation<Card, {question: string, answer: string, _id: string}>({
+        updatedCard: builder.mutation<Card, {question: string | undefined, answer: string | undefined, _id: string | undefined}>({
             query: (updatedCard) => ({
                 url: `/cards/${updatedCard._id}`,
                 method: 'PUT',
                 body: updatedCard
             }),
             invalidatesTags: (result, error, {_id}) => [{type: 'Card', id:_id}, {type: 'Card', id:'LIST'}]        
-        })
+        })//worth passing in ID as a seperate arg? 
     })
 })
 

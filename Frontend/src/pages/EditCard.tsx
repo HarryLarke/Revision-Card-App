@@ -1,34 +1,34 @@
 import { useParams, useNavigate } from 'react-router'
 import { useState } from 'react'
-import { useGetCardByIdQuery, useUpdatedCardMutation } from '../features/cards/cardsSlice'
+
+import { useSelection } from '../hooks/useSelection'
+import { useUpdatedCardMutation } from '../features/cards/cardsSlice'
 
 const EditCard = () => {
 
+    const { selectedCard } = useSelection()
     const [ updateCard, {isLoading} ] = useUpdatedCardMutation()
     const { cardId } = useParams()
 
     const navigate = useNavigate()
 
-    const [ question, setQuestion ] = useState('')
-    const [ answer, setAnswer ] = useState('')
+    const [ question, setQuestion ] = useState(selectedCard?.question)
+    const [ answer, setAnswer ] = useState(selectedCard?.answer)
 
     //Could have a parent bundle selector - just wondering how I woudl insert that data... err closer to implement a useContext??
 
    
-    const onQuestionChange = e => setQuestion(e.target.value)
-    const onAnswerChange = e => setAnswer(e.target.value)
+    const onQuestionChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setQuestion(e.target.value)
+    const onAnswerChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setAnswer(e.target.value)
             
     const canSave = [question, answer].every(Boolean) && !isLoading
  
         
     const HandleUpdateCard = async() => {
         if(canSave && cardId) {
-            console.log(question)
-            console.log(answer)
-            console.log(cardId)
 
             try{
-                await updateCard({question, answer, _id: cardId}).unwrap()
+                await updateCard({question, answer, _id: cardId}).unwrap() //change slice to string | undefined - don't know if best??
         
                 setQuestion('')
                 setAnswer('')

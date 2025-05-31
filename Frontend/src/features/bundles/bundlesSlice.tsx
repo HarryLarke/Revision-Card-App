@@ -34,14 +34,14 @@ export const extendedApiBundlesSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, _id) => [{type: 'Bundle', id:_id}, {type: 'Bundle', id:'LIST'}]
         }),
 
-        updatedBundle: builder.mutation<Bundle, {_id: string, updatedBundle: UpdatedBundle}>({
-            query: ({updatedBundle, _id}) => ({
+        updatedBundle: builder.mutation<Bundle, {bundle: UpdatedBundle, _id: string}>({
+            query: ({bundle, _id}) => ({
                 url: `/bundles/${_id}`,
                 method: 'PUT',
-                body: updatedBundle
+                body: bundle
             }),
             invalidatesTags: (result, error, {_id}) => [{type: 'Bundle', id: _id}, {type: 'Bundle', id: 'LIST'}]        
-        })
+        })//worth passing in ID as a seperate arg? 
     })
 })
 

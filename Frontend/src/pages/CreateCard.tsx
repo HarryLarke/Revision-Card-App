@@ -15,8 +15,8 @@ const CreateCard = () => {
     //Find the best method in sourcing parent bundle ID!
 
     //Maybe add more accessibilty elements to the page??? 
-    const onQuestionChange = e => setQuestion(e.target.value)
-    const onAnswerChange = e => setAnswer(e.target.value)
+    const onQuestionChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setQuestion(e.target.value)
+    const onAnswerChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setAnswer(e.target.value)
     
     const canSave = [question, answer].every(Boolean) && !isLoading
 

@@ -30,11 +30,11 @@ export const createNewBundle  = async (req: Request, res: Response): Promise<voi
 }
 
 export const updateBundle = async (req: Request, res: Response): Promise<void> => {
-    if(!req?.body?.id) {
-        res.status(401).json({'message': 'ID parameter required.'})
+    if(!req?.params?.id) {
+        res.status(400).json({'message': 'ID parameter required.'})
         return
     }
-    const bundle = await Bundle.findOne({_id: req.body.id}).exec()//Make id and _id allign
+    const bundle = await Bundle.findOne({_id: req.params.id}).exec()//Make id and _id allign
     if(!bundle) {
         res.status(204).json({'message': `No Bundle ID matches for: ${req.body.id}`})
         return 
