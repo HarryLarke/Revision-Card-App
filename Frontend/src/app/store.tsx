@@ -16,4 +16,7 @@ export const store = configureStore({
     ),
 });
 
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+//Export above, export the varying types  of data - handy for my UI stuff!
 //Will need to sort out Slices?
