@@ -58,9 +58,13 @@ const Bundle = () => {
             <button
             onClick={() => {setShowAnswers(prev => !prev)}}
             >{handleShow(showAnswers)} Answers</button>
-            <Link to={`/practice/${bundleId}`}
+            <Link className='Link-Button'
+            to={`/practice/${bundleId}`}
             >Practice</Link>
-            <Link to={`/bundle/edit/${bundleId}`}>Edit</Link>
+
+
+            <Link className='Link-Button'
+            to={`/bundle/edit/${bundleId}`}>Edit</Link>
 
         </section>
 

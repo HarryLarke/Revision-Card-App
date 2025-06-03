@@ -1,5 +1,6 @@
 
 export interface Card {
+    parentBundle: string,
    question: string,
    answer: string 
 }

@@ -1,13 +1,14 @@
-import { useParams, useNavigate } from 'react-router'
+import { useParams, useNavigate, Link } from 'react-router'
 import { useState } from 'react'
 
 import { useSelection } from '../hooks/useSelection'
-import { useUpdatedCardMutation } from '../features/cards/cardsSlice'
+import { useUpdatedCardMutation, useDeleteCardMutation } from '../features/cards/cardsSlice'
 
 const EditCard = () => {
 
     const { selectedCard } = useSelection()
     const [ updateCard, {isLoading} ] = useUpdatedCardMutation()
+    const [ deleteCard ] = useDeleteCardMutation()
     const { cardId } = useParams()
 
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ const EditCard = () => {
     const [ answer, setAnswer ] = useState(selectedCard?.answer)
 
     //Could have a parent bundle selector - just wondering how I woudl insert that data... err closer to implement a useContext??
-
+    //Will need the Bundle ID to send back to the bundle!
    
     const onQuestionChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setQuestion(e.target.value)
     const onAnswerChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setAnswer(e.target.value)
@@ -26,18 +27,28 @@ const EditCard = () => {
         
     const HandleUpdateCard = async() => {
         if(canSave && cardId) {
-
             try{
                 await updateCard({question, answer, _id: cardId}).unwrap() //change slice to string | undefined - don't know if best??
-        
                 setQuestion('')
                 setAnswer('')
-                navigate('/') //Will need to change this!
+                navigate(`/`) //Will need to change this! Will contain /bundle/${bundleId}
                     } catch(err) {
                         console.log('Failed to post :', err)
-                    }
-                }
+                    }}}
+    
+    const HandleDeleteCard = async() => {
+        if(cardId) try{
+            const _id = cardId
+            await deleteCard(_id).unwrap()
+            setQuestion('')
+            setAnswer('')
+            if(isLoading === false) {
+                navigate(`/`)
             }
+        } catch(err) {
+            console.log('Failed to delete:', err)
+        }}
+
         return(
               <>
                 <section className="Section-Single">
@@ -65,12 +76,28 @@ const EditCard = () => {
                             onChange={onAnswerChange}
                             required/>
 
-                        <button type='button' 
+                    </form>
+
+                    <div className='Button-Container'>
+                        <Link className='Link-Button'
+                        to={`/card/${cardId}`}>
+                        To Card</Link>
+
+                        <Link className='Link-Button'
+                        to={`/bundle/${selectedCard?.parentBundle}`}
+                        >To Bundle</Link>
+
+                         <button type='button' 
                         className='Save-Button'
                         onClick={HandleUpdateCard}
                         disabled={!canSave}
                         >Save</button>
-                    </form>
+
+                        <button type='button'
+                        className='Delete-Button'
+                        onClick={HandleDeleteCard}
+                        >Delete Card</button>
+                    </div>
 
                 </section> 
             </>

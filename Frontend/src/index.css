@@ -66,7 +66,6 @@ button {
   border-radius: 5px;
 
   cursor: pointer;
-
 }
 
 .Body {
@@ -163,6 +162,19 @@ label {
   gap: 1.2rem;
 } 
 
+.Section-Multiple-Columns {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem;
+  gap: 1.2rem;
+}
+
 .Section-Single {
   height: 100%;
   width: 100%;
@@ -173,7 +185,37 @@ label {
   justify-content: flex-start;
   align-items: center;
   padding: 2rem;
+  gap: 1rem;
 } 
+
+.Button-Container {
+  width: 80%;
+  height: 20%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+
+  border-top: solid 5px var(--BLUE);
+}
+
+.Button-Containter-Column {
+  width:  20%;
+  height: 80%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 2.5rem;
+
+  border-left: solid 5px var(--BLUE);
+}
 
 .Bundle {
   width: 280px;
@@ -290,6 +332,32 @@ form {
   transition: 0.4s;
 }
 
+.Link-Button {
+  width: fit-content;
+  height: fit-content;
+
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: 0.4s;
+  padding: 0.5rem;
+
+  background-color: var(--BLACK);
+  color: var(--CREAM);
+
+  border: 3px solid var(--WHITE);
+  border-radius: 5px;
+}
+
+.Delete-Button {
+  width: 100px;
+  height: 40;;
+
+  background-color: #F25F5C;
+  font-weight: 800;
+  font-size: 1.2rem;
+  transition: 0.2s;
+}
+
 
 /*CHANGES*/
 
@@ -301,10 +369,12 @@ form {
 /*ANIMATIONS*/
 
 .Bundle:hover,
-.Home-Icon:hover {
+.Home-Icon:hover,
+.Delete-Button:hover {
   scale: 105%;
 }
 
-.Save-Button:hover{
+.Save-Button:hover,
+.Link-Button:hover{
   opacity: 80%;
 }

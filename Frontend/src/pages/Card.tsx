@@ -36,21 +36,26 @@ const Card = () => {
 
     return(
         <>
-        <section>
-            <h2>View Card</h2>
-            <button onClick={() => setShowAnswer(prev => !prev)}
-            >
-            {handleShow(showAnswer)} Answer</button>
-            <Link to={`/card/edit/${card?._id}`}>Edit Card</Link>
-            <Link to={`/bundle/${card?.parentBundle}`}>Back to Bundle</Link>
-        
-        </section>
-        
-        <ViewCard
+        <h2>Vue Card</h2>
+
+        <section className="Section-Multiple-Columns">
+
+            <ViewCard
             question={card?.question}
             answer={card?.answer}
             showAnswer={showAnswer}
-        />
+            />
+
+            <div className="Button-Containter-Column">
+                <button onClick={() => setShowAnswer(prev => !prev)}
+                >
+                {handleShow(showAnswer)} Answer</button>
+                <Link className="Link-Button"
+                to={`/card/edit/${card?._id}`}>Edit Card</Link>
+                <Link className="Link-Button"
+                to={`/bundle/${card?.parentBundle}`}>Back to Bundle</Link>
+            </div>
+        </section>
         </>
     )
 }
