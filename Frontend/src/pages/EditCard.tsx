@@ -23,7 +23,8 @@ const EditCard = () => {
     const onAnswerChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => setAnswer(e.target.value)
             
     const canSave = [question, answer].every(Boolean) && !isLoading
- 
+    
+    //Mayb require loading he data - if state is empty!
         
     const HandleUpdateCard = async() => {
         if(canSave && cardId) {
@@ -43,7 +44,7 @@ const EditCard = () => {
             setQuestion('')
             setAnswer('')
             if(isLoading === false) {
-                navigate(`/`)
+                navigate(`/bundle/${selectedCard?.parentBundle}`)
             }
         } catch(err) {
             console.log('Failed to delete:', err)
@@ -51,8 +52,9 @@ const EditCard = () => {
 
         return(
               <>
-                <section className="Section-Single">
-                    <h2>Edit Card</h2>
+              <h2>Edit Card</h2>
+                <section className="Section-Multiple-Columns">
+                    
                 
                     <form>
                         <label htmlFor="question">Question:</label>
@@ -78,7 +80,7 @@ const EditCard = () => {
 
                     </form>
 
-                    <div className='Button-Container'>
+                    <div className='Button-Container-Column'>
                         <Link className='Link-Button'
                         to={`/card/${cardId}`}>
                         To Card</Link>

@@ -42,13 +42,13 @@ export const deleteCard = async (req: Request, res:Response): Promise<void> => {
         res.status(400).json({'message': 'Card ID required.'})
         return
     }
-    const card = await Card.findOne({_id: req.body.id}).exec()
+    const card = await Card.findOne({_id: req.params.id}).exec()
     if(!card) {
         res.status(204).json({'message': `No card ID matcges for: ${req.body.id}`})
         return 
     }
     const result = await card.deleteOne({
-        _id: req.body.id
+        _id: req.params.id
     })
     res.json(result)
 }

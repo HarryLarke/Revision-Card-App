@@ -36,7 +36,7 @@ const Card = () => {
 
     return(
         <>
-        <h2>Vue Card</h2>
+        <h2>View Card</h2>
 
         <section className="Section-Multiple-Columns">
 
@@ -46,7 +46,7 @@ const Card = () => {
             showAnswer={showAnswer}
             />
 
-            <div className="Button-Containter-Column">
+            <div className="Button-Container-Column">
                 <button onClick={() => setShowAnswer(prev => !prev)}
                 >
                 {handleShow(showAnswer)} Answer</button>
