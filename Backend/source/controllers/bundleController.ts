@@ -51,13 +51,13 @@ export const deleteBundle = async (req: Request, res: Response): Promise<void> =
         res.status(400).json({'message': 'Bundle ID required.'})
         return
         }
-    const bundle = await Bundle.findOne({_id: req.body.id}).exec()
+    const bundle = await Bundle.findOne({_id: req.params.id}).exec()
     if(!bundle) {
-        res.status(204).json({'message': `No Bundle ID matcges for: ${req.body.id}`})
+        res.status(204).json({'message': `No Bundle ID matches for: ${req.body.id}`})
         return
         }   
     const result = await bundle.deleteOne({
-        _id: req.body.id
+        _id: req.params.id
     })
     res.json({result})
 }

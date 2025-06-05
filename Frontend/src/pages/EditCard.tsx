@@ -70,7 +70,7 @@ const EditCard = () => {
 
                         <label htmlFor="answer">Answer:</label>
                         <textarea
-                            rows={3}
+                            rows={4}
                             cols={40}
                             id='answer'
                             name='answer'

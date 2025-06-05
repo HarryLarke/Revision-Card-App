@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllCards, createNewCard, updateCard, deleteCard, getCard, getCardsbyBundleId  } from '../../controllers/cardController'
+import { getAllCards, createNewCard, updateCard, deleteCard, getCard, getCardsbyBundleId, deleteCardsByBundleId } from '../../controllers/cardController'
 
 const router = express.Router()
 
@@ -16,5 +16,6 @@ router.route('/:id')
 
 router.route('/bundles/:id')
     .get(getCardsbyBundleId)
+    .delete(deleteCardsByBundleId)
 
 export default router

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, Link } from "react-router"
 import { useAddBundleMutation } from "../features/bundles/bundlesSlice"
 
 const CreateBundle = () => {
@@ -21,7 +21,6 @@ const CreateBundle = () => {
         if(canSave) {
             try{
                 await newBundle({title, description}).unwrap()
-
                 setTitle('')
                 setDescription('')
                 navigate('/')
@@ -33,14 +32,15 @@ const CreateBundle = () => {
 
     return(
         <>
-        <section className="Section-Single">
-            <h2>Create New Bundle</h2>
+        <h2>Create New Bundle</h2>
+        <section className="Section-Multiple-Columns">
+            
         
             <form>
                 <label htmlFor="bundleTitle">Bundle Title:</label>
                 <textarea 
-                    rows={3}
-                    cols={35}
+                    rows={4}
+                    cols={40}
                     id="bundleTitle"
                     name="bundleTitle"
                     value={title}
@@ -50,20 +50,29 @@ const CreateBundle = () => {
 
                 <label htmlFor="bundleDescription">Bundle Description:</label>
                 <textarea
-                    rows={3}
-                    cols={35}
+                    rows={4}
+                    cols={40}
                     id='bundleDescription'
                     name='bundleDecsription'
                     value={description}
                     onChange={onDescriptionChange}
                     required/>
 
-                <button type='button' 
-                className='Save-Button'
-                onClick={HandleSaveBundle}
-                disabled={!canSave}
-                >Save</button>
+                
             </form>
+
+               <div className='Button-Container-Column'>
+                    <Link className='Link-Button'
+                    to={'/'}
+                    >Home</Link>
+
+                    <button type='button' 
+                    className='Save-Button'
+                    onClick={HandleSaveBundle}
+                    disabled={!canSave}
+                    >Save</button>
+
+                </div>
 
         </section> 
         </>

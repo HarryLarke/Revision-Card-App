@@ -8,7 +8,7 @@ const AddBundle = () => {
 
     return(
         <Link
-        to={ROUTES.BUNDLE_CREATE}
+        to={`/bundle/create`}
         className="Bundle Centre"
         > 
             <AddIcon style={'Icon'}/>

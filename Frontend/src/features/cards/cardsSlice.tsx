@@ -37,6 +37,14 @@ export const extendedApiCardsSlice = apiSlice.injectEndpoints({
             ]
                 : [{type: 'Card', id:'LIST'}],
         }),
+        deleteCardsByBundleId: builder.mutation<void, string>({
+            query: (bundleId) => ({
+                url: `/cards/bundles/${bundleId}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: (result, error, id) => [{type: 'Card', id}, {type: 'Card', id:'LIST'}]
+        }), //Don't know if this is the correct method of parsing in a ID - using bundle ID????
+
         //I think having these variable is good, just because It does not require both just one?
         //need get cards via parent bundle id! 
         //Handling the id's the Tags worries me a bit?
@@ -73,6 +81,7 @@ export const {
    useGetCardsQuery, 
    useGetCardByIdQuery,
    useGetCardsByBundleIdQuery,
+   useDeleteCardsByBundleIdMutation,
    useAddCardMutation,
    useDeleteCardMutation,
    useUpdatedCardMutation

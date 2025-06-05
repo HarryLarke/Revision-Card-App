@@ -6,10 +6,11 @@ const router = express.Router()
 router.route('/')
     .get(getAllBundles)
     .post(createNewBundle)
-    .delete(deleteBundle)
+   
 
 router.route('/:id')
     .get(getBundle)
     .put(updateBundle)
+    .delete(deleteBundle)
 
 export default router

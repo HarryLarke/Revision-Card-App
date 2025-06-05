@@ -53,6 +53,7 @@ export const deleteCard = async (req: Request, res:Response): Promise<void> => {
     res.json(result)
 }
 
+
 export const getCard = async (req: Request, res: Response): Promise<void> => {
     if(!req.params?.id) {
         res.status(400).json({'message': 'Card ID required.'})
@@ -96,4 +97,24 @@ export const getCardsbyBundleId = async (req: Request, res: Response): Promise<v
         return
     }
     res.json(cards)
+}
+
+export const deleteCardsByBundleId = async (req: Request, res: Response): Promise<void> => {
+    const id = req.params?.id 
+    if(!id || !req.params?.id) {
+        res.status(400).json({'message': "Card's Parent Bundle ID required."}) }
+
+    try{  
+    const result = await Card.deleteMany({
+        parentBundle : req.params.id
+    })
+    if(result.deletedCount === 0) {
+        res.status(204).json({'message': `Cannot find Parent Bundle ID ${id}.`})
+    } else {
+        res.status(200).json({'message': `Deleted Bundle Cards ${id}.`})
+    }} catch(err) {
+        console.error(err)
+        res.status(500).json({'message': 'Internal Server Error.'}) 
+    }
+   
 }
