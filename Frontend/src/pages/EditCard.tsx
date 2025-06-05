@@ -59,8 +59,8 @@ const EditCard = () => {
                     <form>
                         <label htmlFor="question">Question:</label>
                         <textarea 
-                            rows={3}
-                            cols={35}
+                            rows={4}
+                            cols={40}
                             id="question"
                             name="question"
                             value={question}
@@ -71,7 +71,7 @@ const EditCard = () => {
                         <label htmlFor="answer">Answer:</label>
                         <textarea
                             rows={3}
-                            cols={35}
+                            cols={40}
                             id='answer'
                             name='answer'
                             value={answer}

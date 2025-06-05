@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router'
+import { useParams, useNavigate, Link } from 'react-router'
 import { useState } from 'react'
 
 import { useSelection } from '../hooks/useSelection'
@@ -40,14 +40,15 @@ const EditBundle = () => {
             }
         return(
               <>
-                <section className="Section-Single">
-                    <h2>Edit Bundle</h2>
+              <h2>Edit Bundle</h2>
+               <section className="Section-Multiple-Columns">
+                    
                 
                     <form>
                         <label htmlFor="title">Title</label>
                         <textarea 
-                            rows={3}
-                            cols={35}
+                            rows={4}
+                            cols={40}
                             id="title"
                             name="title"
                             value={title}
@@ -57,20 +58,32 @@ const EditBundle = () => {
 
                         <label htmlFor="description">Desription:</label>
                         <textarea
-                            rows={3}
-                            cols={35}
+                            rows={4}
+                            cols={40}
                             id='description'
                             name='description'
                             value={description}
                             onChange={onDescriptionChange}
                             required/>
+                    </form>
 
+                    <div className='Button-Container-Column'>
                         <button type='button' 
                         className='Save-Button'
                         onClick={HandleUpdateBundle}
                         disabled={!canSave}
                         >Save</button>
-                    </form>
+
+                        <Link className='Link-Button'
+                        to={`/bundle/${bundleId}`}
+                        >Back</Link>
+
+                        <button className='Delete-Button'
+                        
+                        >Delete Bundle</button>
+                        
+                    </div>
+                    
 
                 </section> 
             </>
